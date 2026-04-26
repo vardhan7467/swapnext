@@ -8,6 +8,7 @@ import Profile from './pages/Profile';
 import AddProduct from './pages/AddProduct';
 import ProductDetails from './pages/ProductDetails';
 import Chat from './pages/Chat';
+import Cart from './pages/Cart';
 import './App.css';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/chat/:receiverId/:productId" element={<Chat />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </main>
       </div>

@@ -29,6 +29,10 @@ const Navbar = () => {
           
           {isAuthenticated ? (
             <>
+              <Link to="/cart" className="nav-item">
+                <ShoppingBag size={18} />
+                <span>Cart</span>
+              </Link>
               <Link to="/chat" className="nav-item">
                 <MessageSquare size={18} />
                 <span>Messages</span>

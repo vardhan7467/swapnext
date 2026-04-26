@@ -67,4 +67,33 @@ export const messageAPI = {
   }
 };
 
+export const cartAPI = {
+  getCart: async (userId) => {
+    const response = await api.get(`/cart/${userId}`);
+    return response.data;
+  },
+  addToCart: async (userId, productId, quantity = 1) => {
+    const response = await api.post('/cart/add', null, {
+      params: { userId, productId, quantity }
+    });
+    return response.data;
+  },
+  updateQuantity: async (userId, productId, quantity) => {
+    const response = await api.put('/cart/update', null, {
+      params: { userId, productId, quantity }
+    });
+    return response.data;
+  },
+  removeFromCart: async (userId, productId) => {
+    const response = await api.delete('/cart/remove', {
+      params: { userId, productId }
+    });
+    return response.data;
+  },
+  clearCart: async (userId) => {
+    const response = await api.delete(`/cart/clear/${userId}`);
+    return response.data;
+  }
+};
+
 export default api;

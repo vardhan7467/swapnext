@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { productAPI, messageAPI, API_BASE_URL } from '../services/api';
-import { ArrowLeft, MapPin, Tag, Box, Mail, Phone, MessageSquare } from 'lucide-react';
+import { productAPI, messageAPI, cartAPI, API_BASE_URL } from '../services/api';
+import { ArrowLeft, MapPin, Tag, Box, Mail, Phone, MessageSquare, ShoppingCart, Zap } from 'lucide-react';
 import './ProductDetails.css';
 
 const ProductDetails = () => {
@@ -10,6 +10,34 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [addingToCart, setAddingToCart] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const handleAddToCart = async (showToast = true) => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    setAddingToCart(true);
+    try {
+      await cartAPI.addToCart(user.id, product.id, 1);
+      if (showToast) alert('Added to cart!');
+    } catch (err) {
+      console.error('Failed to add to cart:', err);
+      alert('Failed to add to cart. Please try again.');
+    } finally {
+      setAddingToCart(false);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    await handleAddToCart(false);
+    navigate('/cart');
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -95,10 +123,31 @@ const ProductDetails = () => {
               className="btn btn-primary btn-full" 
               style={{ marginTop: '1.5rem' }}
               onClick={() => navigate(`/chat/${product.owner?.id}/${product.id}`)}
-              disabled={!product.owner?.id || product.owner?.id === JSON.parse(localStorage.getItem('user'))?.id}
+              disabled={!product.owner?.id || product.owner?.id === user?.id}
             >
+              <MessageSquare size={18} style={{ marginRight: '8px' }} />
               Chat with Seller
             </button>
+
+            <div className="action-buttons" style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+              <button 
+                className="btn btn-secondary btn-full"
+                onClick={handleAddToCart}
+                disabled={addingToCart || product.owner?.id === user?.id}
+              >
+                <ShoppingCart size={18} style={{ marginRight: '8px' }} />
+                Add to Cart
+              </button>
+              <button 
+                className="btn btn-accent btn-full"
+                onClick={handleBuyNow}
+                disabled={addingToCart || product.owner?.id === user?.id}
+                style={{ backgroundColor: 'var(--accent-color)', color: 'white' }}
+              >
+                <Zap size={18} style={{ marginRight: '8px' }} />
+                Buy Now
+              </button>
+            </div>
           </div>
         </div>
       </div>
