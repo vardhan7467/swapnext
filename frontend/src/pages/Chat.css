@@ -1,0 +1,252 @@
+.chat-page {
+  padding: 2rem 1.5rem;
+  height: calc(100vh - 120px);
+}
+
+.chat-layout {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+/* Sidebar */
+.chat-sidebar {
+  width: 320px;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-search {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.sidebar-search input {
+  background: transparent;
+  border: none;
+  color: white;
+  width: 100%;
+  outline: none;
+  font-size: 0.875rem;
+}
+
+.contacts-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: var(--transition);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.contact-item:hover {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.contact-item.active {
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid var(--primary);
+}
+
+.contact-item .avatar {
+  background: var(--bg-card);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-info .username {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.contact-info .last-msg {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Chat Window */
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 23, 42, 0.2);
+}
+
+.chat-header {
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-user .avatar {
+  width: 40px;
+  height: 40px;
+  background: rgba(59, 130, 246, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.header-user h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.header-user .status {
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.header-product {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-md);
+}
+
+.messages-container {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.message-wrapper.sent {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.sent .message-bubble {
+  background: var(--primary);
+  color: white;
+  border-bottom-right-radius: 2px;
+}
+
+.received .message-bubble {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-bottom-left-radius: 2px;
+}
+
+.message-bubble p {
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.time {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  display: block;
+  text-align: right;
+}
+
+.chat-input {
+  padding: 1.5rem 2rem;
+  background: rgba(15, 23, 42, 0.4);
+  display: flex;
+  gap: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.chat-input input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.25rem;
+  color: white;
+  outline: none;
+  transition: var(--transition);
+}
+
+.chat-input input:focus {
+  border-color: var(--primary);
+}
+
+.chat-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--text-muted);
+}
+
+.chat-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .chat-sidebar {
+    width: 80px;
+  }
+  .sidebar-header, .contact-info {
+    display: none;
+  }
+  .contact-item {
+    justify-content: center;
+  }
+}
