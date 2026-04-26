@@ -51,7 +51,8 @@ const AddProduct = () => {
       navigate('/products');
     } catch (err) {
       console.error(err);
-      setError(err.message || "Failed to upload product. Ensure an image is selected.");
+      const message = err.response?.data || err.message || "Failed to upload product.";
+      setError(typeof message === 'string' ? message : "Failed to upload product. Check file size.");
     } finally {
       setLoading(false);
     }

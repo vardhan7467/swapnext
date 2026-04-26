@@ -41,9 +41,7 @@ export const productAPI = {
     return response.data;
   },
   uploadProduct: async (userId, formData) => {
-    const response = await api.post(`/products/upload/user/${userId}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
+    const response = await api.post(`/products/upload/user/${userId}`, formData);
     return response.data;
   },
   getProductsByUser: async (userId) => {

@@ -33,7 +33,7 @@ public class ProductController {
     }
 
     @PostMapping("/upload/user/{userId}")
-    public ResponseEntity<Products> uploadProduct(
+    public ResponseEntity<?> uploadProduct(
             @RequestParam("image") MultipartFile file,
             @RequestParam String title,
             @RequestParam(required = false) String description,
@@ -46,6 +46,10 @@ public class ProductController {
             @RequestParam(required = false) String number,
             @PathVariable Long userId) {
         try {
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest().body("Please select an image to upload.");
+            }
+
             String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             Path uploadPath = Paths.get("uploads", filename);
             Files.createDirectories(uploadPath.getParent());
@@ -66,7 +70,7 @@ public class ProductController {
             return ResponseEntity.ok(productService.createProduct(product, userId));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Upload failed: " + e.getMessage());
         }
     }
 
