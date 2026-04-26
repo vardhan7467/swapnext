@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Recycle, ShieldCheck, Zap } from 'lucide-react';
-import { productAPI } from '../services/api';
+import { productAPI, API_BASE_URL } from '../services/api';
 import './Home.css';
 
 const Home = () => {
@@ -54,7 +54,7 @@ const Home = () => {
                 >
                   <div className="demo-item">
                     <img 
-                      src={item.image?.startsWith('http') ? item.image : `http://localhost:8080${item.image}`} 
+                      src={item.image?.startsWith('http') ? item.image : `${API_BASE_URL}${item.image}`} 
                       alt={item.title} 
                       className="demo-img" 
                     />

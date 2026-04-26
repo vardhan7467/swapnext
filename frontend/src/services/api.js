@@ -1,9 +1,13 @@
 import axios from 'axios';
 
+const API_BASE_URL = 'https://swapnext.onrender.com';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: `${API_BASE_URL}/api`,
   withCredentials: true,
 });
+
+export { API_BASE_URL };
 
 export const authAPI = {
   login: async (credentials) => {

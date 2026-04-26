@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Filter, Plus } from 'lucide-react';
-import { productAPI } from '../services/api';
+import { productAPI, API_BASE_URL } from '../services/api';
 import './Products.css';
 
 const Products = () => {
@@ -107,7 +107,7 @@ const Products = () => {
           {products.map(product => (
             <div key={product.id} className="product-card glass-panel" onClick={() => navigate(`/product/${product.id}`)}>
               <div className="product-image">
-                <img src={product.image?.startsWith('http') ? product.image : `http://localhost:8080${product.image}`} alt={product.title} />
+                <img src={product.image?.startsWith('http') ? product.image : `${API_BASE_URL}${product.image}`} alt={product.title} />
                 <span className="product-category">{product.category}</span>
               </div>
               <div className="product-details">

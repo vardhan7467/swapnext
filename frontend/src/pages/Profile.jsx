@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { User, LogOut, PackageSearch, Trash2 } from 'lucide-react';
-import { productAPI } from '../services/api';
+import { productAPI, API_BASE_URL } from '../services/api';
 import './Auth.css';
 
 const Profile = () => {
@@ -73,7 +73,7 @@ const Profile = () => {
               {userProducts.map(p => (
                 <div key={p.id} className="product-card glass-panel">
                   <div className="product-image" style={{ height: '140px' }}>
-                    <img src={p.image?.startsWith('http') ? p.image : `http://localhost:8080${p.image}`} alt={p.title} />
+                    <img src={p.image?.startsWith('http') ? p.image : `${API_BASE_URL}${p.image}`} alt={p.title} />
                   </div>
                   <div className="product-details" style={{ padding: '1rem' }}>
                     <h4 style={{ margin: 0, fontSize: '1rem' }}>{p.title}</h4>

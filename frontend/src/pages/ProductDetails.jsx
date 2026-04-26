@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { productAPI } from '../services/api';
+import { productAPI, messageAPI, API_BASE_URL } from '../services/api';
 import { ArrowLeft, MapPin, Tag, Box, Mail, Phone, MessageSquare } from 'lucide-react';
 import './ProductDetails.css';
 
@@ -37,7 +37,7 @@ const ProductDetails = () => {
 
       <div className="details-grid">
         <div className="details-image glass-panel">
-          <img src={product.image?.startsWith('http') ? product.image : `http://localhost:8080${product.image}`} alt={product.title} />
+          <img src={product.image?.startsWith('http') ? product.image : `${API_BASE_URL}${product.image}`} alt={product.title} />
         </div>
 
         <div className="details-info">
