@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://swapnext.onrender.com';
+// Dynamic API URL: Use proxy in development, specific URL in production
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? '' 
+  : 'https://swapnext.onrender.com';
 
 const api = axios.create({
   baseURL: `${API_BASE_URL}/api`,
@@ -73,15 +76,11 @@ export const cartAPI = {
     return response.data;
   },
   addToCart: async (userId, productId, quantity = 1) => {
-    const response = await api.post('/cart/add', null, {
-      params: { userId, productId, quantity }
-    });
+    const response = await api.post('/cart/add', { userId, productId, quantity });
     return response.data;
   },
   updateQuantity: async (userId, productId, quantity) => {
-    const response = await api.put('/cart/update', null, {
-      params: { userId, productId, quantity }
-    });
+    const response = await api.put('/cart/update', { userId, productId, quantity });
     return response.data;
   },
   removeFromCart: async (userId, productId) => {

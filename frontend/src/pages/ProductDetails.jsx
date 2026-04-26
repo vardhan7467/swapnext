@@ -12,19 +12,25 @@ const ProductDetails = () => {
   const [error, setError] = useState(null);
   const [addingToCart, setAddingToCart] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
+  const isOwner = product?.owner?.id === user?.id;
 
   const handleAddToCart = async (showToast = true) => {
     if (!user) {
       navigate('/login');
       return;
     }
+    if (isOwner) {
+      alert("You cannot add your own product to the cart.");
+      return;
+    }
     setAddingToCart(true);
     try {
+      console.log('Adding to cart:', { userId: user.id, productId: product.id });
       await cartAPI.addToCart(user.id, product.id, 1);
-      if (showToast) alert('Added to cart!');
+      if (showToast) alert('Added to cart successfully!');
     } catch (err) {
-      console.error('Failed to add to cart:', err);
-      alert('Failed to add to cart. Please try again.');
+      console.error('Failed to add to cart:', err.response?.data || err.message);
+      alert('Failed to add to cart. Check console for details.');
     } finally {
       setAddingToCart(false);
     }
@@ -133,7 +139,7 @@ const ProductDetails = () => {
               <button 
                 className="btn btn-secondary btn-full"
                 onClick={handleAddToCart}
-                disabled={addingToCart || product.owner?.id === user?.id}
+                disabled={addingToCart || isOwner}
               >
                 <ShoppingCart size={18} style={{ marginRight: '8px' }} />
                 Add to Cart
@@ -141,13 +147,18 @@ const ProductDetails = () => {
               <button 
                 className="btn btn-accent btn-full"
                 onClick={handleBuyNow}
-                disabled={addingToCart || product.owner?.id === user?.id}
+                disabled={addingToCart || isOwner}
                 style={{ backgroundColor: 'var(--accent-color)', color: 'white' }}
               >
                 <Zap size={18} style={{ marginRight: '8px' }} />
                 Buy Now
               </button>
             </div>
+            {isOwner && (
+              <p className="owner-notice" style={{ marginTop: '1rem', color: 'var(--text-secondary)', fontSize: '0.85rem', textAlign: 'center' }}>
+                * This is your own product listing.
+              </p>
+            )}
           </div>
         </div>
       </div>
